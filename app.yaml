@@ -1,0 +1,9 @@
+runtime: python311
+
+entrypoint: gunicorn -b :$PORT app:app
+
+env_variables:
+    PUBSUB_VERIFICATION_TOKEN: *placeholdertoken*
+    SUBJECT: *placeholdersubject* # e.g. "contact@placeholder.com"
+    TOPIC_NAME: *placeholdertopicname* # e.g. "projects/placeholder/topics/placeholder"
+    SERVICE_ACCOUNT_FILE: *placeholderserviceaccountfile* # e.g. "placeholder-service-847543-b1-453e5938c.json"
