@@ -7,7 +7,6 @@ import logging
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.events import EVENT_JOB_EXECUTED, EVENT_JOB_ERROR
 
-
 from gmail_functions import get_new_emails, watch_gmail
 
 
@@ -16,9 +15,11 @@ messages: List[str] = []
 
 PUBSUB_VERIFICATION_TOKEN = os.getenv('PUBSUB_VERIFICATION_TOKEN')
 
+
 @app.route('/')
 def index():
     return render_template('index.html', messages=messages)
+
 
 @app.route('/push-handlers/receive_messages', methods=['POST'])
 def receive_messages():
@@ -34,8 +35,10 @@ def receive_messages():
     return '', 200
 
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
+
 
 def job_listener(event):
     if event.exception:
@@ -47,7 +50,8 @@ def job_listener(event):
 
 if __name__ == '__main__':
     scheduler = BackgroundScheduler()
-    scheduler.add_job(func=watch_gmail, trigger="interval", days=1, id='watch_gmail_job')
+    scheduler.add_job(func=watch_gmail, trigger="interval",
+                      days=1, id='watch_gmail_job')
     scheduler.add_listener(job_listener, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
     scheduler.start()
 

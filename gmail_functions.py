@@ -5,6 +5,7 @@ from googleapiclient.errors import HttpError
 
 TOPICNAME = os.getenv('TOPICNAME')
 
+
 def watch_gmail():
     request = {
         "labelIds": ["INBOX"],
@@ -21,7 +22,8 @@ def watch_gmail():
 
 def get_new_emails(history_id):
     # Fetch the history of changes since the provided historyId
-    history_response = gmail_service.users().history().list(userId='me', startHistoryId=history_id).execute()
+    history_response = gmail_service.users().history().list(
+        userId='me', startHistoryId=history_id).execute()
 
     new_emails = []
 
@@ -31,7 +33,8 @@ def get_new_emails(history_id):
                 for message_added in history_record['messagesAdded']:
                     message_id = message_added['message']['id']
                     # Fetch the full message
-                    message = gmail_service.users().messages().get(userId='me', id=message_id, format='full').execute()
+                    message = gmail_service.users().messages().get(
+                        userId='me', id=message_id, format='full').execute()
                     new_emails.append(message)
 
     return new_emails

@@ -3,7 +3,7 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 
 
-SERVICE_ACCOUNT_FILE =  os.getenv('SERVICE_ACCOUNT_FILE')
+SERVICE_ACCOUNT_FILE = os.getenv('SERVICE_ACCOUNT_FILE')
 
 SCOPES = [
     "https://www.googleapis.com/auth/gmail.readonly",
@@ -11,6 +11,7 @@ SCOPES = [
 ]
 
 SUBJECT = os.getenv('SUBJECT')
+
 
 def authenticate_apis():
     creds = service_account.Credentials.from_service_account_file(
